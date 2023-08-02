@@ -33,6 +33,17 @@ class GameScene: SKScene {
 
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        switch gameStatus {
+        case .idle:
+            startGame()
+        case .running:
+            print("лети моя птичка, лети-и-и-и")
+        case .over:
+            shuffle()
+        }
+    }
+    
     private func addBase() {
         base1 = SKSpriteNode(imageNamed: "base")
         base1.anchorPoint = CGPoint(x: 0, y: 0)
