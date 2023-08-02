@@ -8,25 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		ADCBE5882A7A45830025969D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCBE5872A7A45830025969D /* AppDelegate.swift */; };
-		ADCBE58A2A7A45830025969D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE5892A7A45830025969D /* GameScene.sks */; };
-		ADCBE58C2A7A45830025969D /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE58B2A7A45830025969D /* Actions.sks */; };
 		ADCBE58E2A7A45830025969D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCBE58D2A7A45830025969D /* GameScene.swift */; };
 		ADCBE5902A7A45830025969D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCBE58F2A7A45830025969D /* GameViewController.swift */; };
 		ADCBE5932A7A45830025969D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE5912A7A45830025969D /* Main.storyboard */; };
 		ADCBE5952A7A45840025969D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE5942A7A45840025969D /* Assets.xcassets */; };
 		ADCBE5982A7A45840025969D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE5962A7A45840025969D /* LaunchScreen.storyboard */; };
+		ADCBE59F2A7A487F0025969D /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE59E2A7A487F0025969D /* player.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		ADCBE5842A7A45830025969D /* FlappyBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADCBE5872A7A45830025969D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ADCBE5892A7A45830025969D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		ADCBE58B2A7A45830025969D /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		ADCBE58D2A7A45830025969D /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		ADCBE58F2A7A45830025969D /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		ADCBE5922A7A45830025969D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ADCBE5942A7A45840025969D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADCBE5972A7A45840025969D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		ADCBE59E2A7A487F0025969D /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,13 +58,12 @@
 			isa = PBXGroup;
 			children = (
 				ADCBE5872A7A45830025969D /* AppDelegate.swift */,
-				ADCBE5892A7A45830025969D /* GameScene.sks */,
-				ADCBE58B2A7A45830025969D /* Actions.sks */,
 				ADCBE58D2A7A45830025969D /* GameScene.swift */,
 				ADCBE58F2A7A45830025969D /* GameViewController.swift */,
 				ADCBE5912A7A45830025969D /* Main.storyboard */,
 				ADCBE5942A7A45840025969D /* Assets.xcassets */,
 				ADCBE5962A7A45840025969D /* LaunchScreen.storyboard */,
+				ADCBE59E2A7A487F0025969D /* player.atlas */,
 			);
 			path = FlappyBird;
 			sourceTree = "<group>";
@@ -129,11 +126,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADCBE59F2A7A487F0025969D /* player.atlas in Resources */,
 				ADCBE5932A7A45830025969D /* Main.storyboard in Resources */,
-				ADCBE58A2A7A45830025969D /* GameScene.sks in Resources */,
 				ADCBE5952A7A45840025969D /* Assets.xcassets in Resources */,
 				ADCBE5982A7A45840025969D /* LaunchScreen.storyboard in Resources */,
-				ADCBE58C2A7A45830025969D /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +297,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -308,6 +305,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = lantsov.FlappyBird;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -329,6 +329,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -336,6 +337,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = lantsov.FlappyBird;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
