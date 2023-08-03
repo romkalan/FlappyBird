@@ -30,7 +30,9 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-
+        if gameStatus != .over {
+            moveScene()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -47,11 +49,14 @@ class GameScene: SKScene {
     private func addBase() {
         base1 = SKSpriteNode(imageNamed: "base")
         base1.anchorPoint = CGPoint(x: 0, y: 0)
+        base1.setScale(1.2)
         base1.position = CGPoint(x: 0, y: 0)
         addChild(base1)
         
         base2 = SKSpriteNode(imageNamed: "base")
         base2.anchorPoint = CGPoint(x: 0, y: 0)
+        base2.setScale(1.2)
+//        base2.xScale
         base2.position = CGPoint(x: base1.size.width, y: 0)
         addChild(base2)
     }
@@ -62,16 +67,49 @@ class GameScene: SKScene {
         addChild(player)
     }
     
+    private func birdStartFly() {
+        let flyAction = SKAction.animate(
+            with: [
+                SKTexture(imageNamed: "redbird-midflap"),
+                SKTexture(imageNamed: "redbird-downflap"),
+                SKTexture(imageNamed: "redbird-midflap"),
+                SKTexture(imageNamed: "redbird-upflap"),
+            ],
+            timePerFrame: 0.15
+        )
+        player.run(SKAction.repeatForever(flyAction), withKey: "fly")
+    }
+    
+    private func birdStopFly() {
+        player.removeAction(forKey: "fly")
+    }
+    
+    private func moveScene() {
+        if base1.position.x < -base1.size.width {
+            base1.position = CGPoint(x: base2.position.x + base1.size.width, y: base1.position.y)
+        }
+        if base2.position.x < -base2.size.width {
+            base2.position = CGPoint(x: base1.position.x + base2.size.width, y: base2.position.y)
+        }
+        
+        base1.position = CGPoint(x: base1.position.x - 1, y: base1.position.y)
+        base2.position = CGPoint(x: base2.position.x - 1, y: base2.position.y)
+        
+    }
+    
     // GameStatus methods
     private func shuffle() {
         gameStatus = .idle
+        
     }
     
     private func startGame() {
         gameStatus = .running
+        birdStartFly()
     }
     
     private func gameOver() {
         gameStatus = .over
+        birdStopFly()
     }
 }
