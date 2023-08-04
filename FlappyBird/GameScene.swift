@@ -16,6 +16,12 @@ enum GameStatus {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    lazy var gameOverLabel: SKLabelNode = {
+        let label = SKLabelNode(fontNamed: "Chalkduster")
+        label.text = "Game Over"
+        return label
+    }()
+    
     var gameStatus: GameStatus = .idle
     
     var base1: SKSpriteNode!
@@ -26,8 +32,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundColor = SKColor(red: 80/255, green: 192/255, blue: 203/255, alpha: 1.0)
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: -4)
         addBase()
         addPlayer()
+        shuffle()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -41,7 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .idle:
             startGame()
         case .running:
-            player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 20))
+            player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 7))
         case .over:
             shuffle()
         }
@@ -71,15 +79,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Player's methods
     private func addPlayer() {
         player = SKSpriteNode(imageNamed: "redbird-midflap")
-        player.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        addChild(player)
         
         guard let playerTexture = player.texture else { return }
         player.physicsBody = SKPhysicsBody(texture: playerTexture, size: player.size)
         player.physicsBody?.allowsRotation = false // запретить вращение
         player.physicsBody?.categoryBitMask = BitMaskCategory.player.rawValue
         player.physicsBody?.contactTestBitMask = BitMaskCategory.base.rawValue | BitMaskCategory.pipe.rawValue
-        
-        addChild(player)
     }
     
     private func birdStartFly() {
@@ -101,9 +107,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Pipes methods
     private func removeAllPipesNode() {
-//        for pipe in self.children where pipe.name == "pipe" {
-//            pipe.removeFromParent()
-//        }
+        //        for pipe in self.children where pipe.name == "pipe" {
+        //            pipe.removeFromParent()
+        //        }
         enumerateChildNodes(withName: "pipe") { (node, stop) in
             node.removeFromParent()
         }
@@ -150,7 +156,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         topPipe.physicsBody = SKPhysicsBody(texture: topPipeTexture, size: topSize)
         topPipe.physicsBody?.isDynamic = false
         topPipe.physicsBody?.categoryBitMask = BitMaskCategory.pipe.rawValue
-                
+        
         let bottomPipeTexture = SKTexture(imageNamed: "pipe-green")
         let bottomPipe = SKSpriteNode(texture: bottomPipeTexture, size: bottomSize)
         bottomPipe.yScale = -1
@@ -196,7 +202,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // GameStatus methods
     private func shuffle() {
+        gameOverLabel.removeFromParent()
         gameStatus = .idle
+        player.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         removeAllPipesNode()
         player.physicsBody?.isDynamic = false
     }
@@ -212,5 +220,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameStatus = .over
         birdStopFly()
         stopCreateRandomPipes()
+        
+        isUserInteractionEnabled = false
+        addChild(gameOverLabel)
+        gameOverLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height)
+        gameOverLabel.run(SKAction.move(by: CGVector(dx: 0, dy: -self.size.height * 0.5), duration: 0.5)) {
+            self.isUserInteractionEnabled = true
+        }
+    }
+}
+
+// SKPhysicsContactDelegate
+extension GameScene {
+    func didBegin(_ contact: SKPhysicsContact) {
+        if gameStatus != .running { return }
+        
+        var bodyA: SKPhysicsBody
+        var bodyB: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            bodyA = contact.bodyA
+            bodyB = contact.bodyB
+        } else {
+            bodyA = contact.bodyB
+            bodyB = contact.bodyA
+        }
+        
+        if (bodyA.categoryBitMask == BitMaskCategory.player.rawValue && bodyB.categoryBitMask == BitMaskCategory.pipe.rawValue) || (bodyA.categoryBitMask == BitMaskCategory.player.rawValue && bodyB.categoryBitMask == BitMaskCategory.base.rawValue) {
+            gameOver()
+        }
     }
 }
