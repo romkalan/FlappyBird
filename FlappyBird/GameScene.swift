@@ -16,9 +16,25 @@ enum GameStatus {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    lazy var scoreLabel: SKLabelNode = {
+        let label = SKLabelNode(text: "score:0")
+        label.verticalAlignmentMode = .top
+        label.horizontalAlignmentMode = .center
+        label.fontSize = 40
+        label.zPosition = 100
+        return label
+    }()
+    
+    var score = 0 {
+        didSet {
+            scoreLabel.text = score.description
+        }
+    }
+    
     lazy var gameOverLabel: SKLabelNode = {
         let label = SKLabelNode(fontNamed: "Chalkduster")
         label.text = "Game Over"
+        label.zPosition = 100
         return label
     }()
     
@@ -36,11 +52,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addBase()
         addPlayer()
         shuffle()
+        
+        scoreLabel.position = CGPoint(x: self.size.width / 2, y: self.size.height)
+        addChild(scoreLabel)
     }
     
     override func update(_ currentTime: TimeInterval) {
         if gameStatus != .over {
             moveScene()
+        }
+        if gameStatus == .running {
+            score += 1
         }
     }
     
@@ -207,6 +229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         removeAllPipesNode()
         player.physicsBody?.isDynamic = false
+        score = 0
     }
     
     private func startGame() {
