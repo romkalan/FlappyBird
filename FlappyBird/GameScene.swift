@@ -14,7 +14,7 @@ enum GameStatus {
     case over // окончание
 }
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameStatus: GameStatus = .idle
     
@@ -24,9 +24,10 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.backgroundColor = SKColor(red: 80/255, green: 192/255, blue: 203/255, alpha: 1.0)
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        self.physicsWorld.contactDelegate = self
         addBase()
         addPlayer()
-        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -40,7 +41,7 @@ class GameScene: SKScene {
         case .idle:
             startGame()
         case .running:
-            print("лети моя птичка, лети-и-и-и")
+            player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 20))
         case .over:
             shuffle()
         }
@@ -51,13 +52,19 @@ class GameScene: SKScene {
         base1.anchorPoint = CGPoint(x: 0, y: 0)
         base1.setScale(1.2)
         base1.position = CGPoint(x: 0, y: 0)
-        addChild(base1)
         
         base2 = SKSpriteNode(imageNamed: "base")
         base2.anchorPoint = CGPoint(x: 0, y: 0)
         base2.setScale(1.2)
-//        base2.xScale
         base2.position = CGPoint(x: base1.size.width, y: 0)
+        
+        base1.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: base1.size.width, height: base1.size.height))
+        base1.physicsBody?.categoryBitMask = BitMaskCategory.base.rawValue
+        
+        base2.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: base2.size.width, height: base2.size.height))
+        base2.physicsBody?.categoryBitMask = BitMaskCategory.base.rawValue
+        
+        addChild(base1)
         addChild(base2)
     }
     
@@ -65,6 +72,13 @@ class GameScene: SKScene {
     private func addPlayer() {
         player = SKSpriteNode(imageNamed: "redbird-midflap")
         player.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        
+        guard let playerTexture = player.texture else { return }
+        player.physicsBody = SKPhysicsBody(texture: playerTexture, size: player.size)
+        player.physicsBody?.allowsRotation = false // запретить вращение
+        player.physicsBody?.categoryBitMask = BitMaskCategory.player.rawValue
+        player.physicsBody?.contactTestBitMask = BitMaskCategory.base.rawValue | BitMaskCategory.pipe.rawValue
+        
         addChild(player)
     }
     
@@ -132,8 +146,11 @@ class GameScene: SKScene {
             x: self.size.width + topPipe.size.width * 0.5,
             y: base1.size.height + topPipe.size.height * 0.5
         )
-        addChild(topPipe)
         
+        topPipe.physicsBody = SKPhysicsBody(texture: topPipeTexture, size: topSize)
+        topPipe.physicsBody?.isDynamic = false
+        topPipe.physicsBody?.categoryBitMask = BitMaskCategory.pipe.rawValue
+                
         let bottomPipeTexture = SKTexture(imageNamed: "pipe-green")
         let bottomPipe = SKSpriteNode(texture: bottomPipeTexture, size: bottomSize)
         bottomPipe.yScale = -1
@@ -142,6 +159,12 @@ class GameScene: SKScene {
             x: self.size.width + bottomPipe.size.width * 0.5,
             y: self.size.height - bottomPipe.size.height * 0.5
         )
+        
+        bottomPipe.physicsBody = SKPhysicsBody(texture: bottomPipeTexture, size: bottomSize)
+        bottomPipe.physicsBody?.isDynamic = false
+        bottomPipe.physicsBody?.categoryBitMask = BitMaskCategory.pipe.rawValue
+        
+        addChild(topPipe)
         addChild(bottomPipe)
     }
     
@@ -175,12 +198,14 @@ class GameScene: SKScene {
     private func shuffle() {
         gameStatus = .idle
         removeAllPipesNode()
+        player.physicsBody?.isDynamic = false
     }
     
     private func startGame() {
         gameStatus = .running
         birdStartFly()
         generateRandomPipes()
+        player.physicsBody?.isDynamic = true
     }
     
     private func gameOver() {

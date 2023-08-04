@@ -14,6 +14,7 @@
 		ADCBE5952A7A45840025969D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE5942A7A45840025969D /* Assets.xcassets */; };
 		ADCBE5982A7A45840025969D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE5962A7A45840025969D /* LaunchScreen.storyboard */; };
 		ADCBE59F2A7A487F0025969D /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ADCBE59E2A7A487F0025969D /* player.atlas */; };
+		ADCBE5A12A7D09680025969D /* BitMaskCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCBE5A02A7D09680025969D /* BitMaskCategory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		ADCBE5942A7A45840025969D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADCBE5972A7A45840025969D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADCBE59E2A7A487F0025969D /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
+		ADCBE5A02A7D09680025969D /* BitMaskCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitMaskCategory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,13 +61,22 @@
 			children = (
 				ADCBE5872A7A45830025969D /* AppDelegate.swift */,
 				ADCBE58D2A7A45830025969D /* GameScene.swift */,
-				ADCBE58F2A7A45830025969D /* GameViewController.swift */,
+				ADCBE5A02A7D09680025969D /* BitMaskCategory.swift */,
+				ADCBE5A22A7D09DB0025969D /* ViewController */,
 				ADCBE5912A7A45830025969D /* Main.storyboard */,
 				ADCBE5942A7A45840025969D /* Assets.xcassets */,
 				ADCBE5962A7A45840025969D /* LaunchScreen.storyboard */,
 				ADCBE59E2A7A487F0025969D /* player.atlas */,
 			);
 			path = FlappyBird;
+			sourceTree = "<group>";
+		};
+		ADCBE5A22A7D09DB0025969D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ADCBE58F2A7A45830025969D /* GameViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADCBE58E2A7A45830025969D /* GameScene.swift in Sources */,
+				ADCBE5A12A7D09680025969D /* BitMaskCategory.swift in Sources */,
 				ADCBE5902A7A45830025969D /* GameViewController.swift in Sources */,
 				ADCBE5882A7A45830025969D /* AppDelegate.swift in Sources */,
 			);
