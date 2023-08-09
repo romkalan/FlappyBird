@@ -129,9 +129,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Pipes methods
     private func removeAllPipesNode() {
-        //        for pipe in self.children where pipe.name == "pipe" {
-        //            pipe.removeFromParent()
-        //        }
         enumerateChildNodes(withName: "pipe") { (node, stop) in
             node.removeFromParent()
         }
