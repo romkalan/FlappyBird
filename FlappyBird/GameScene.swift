@@ -48,12 +48,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundColor = SKColor(red: 80/255, green: 192/255, blue: 203/255, alpha: 1.0)
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: -4)
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: -3)
         addBase()
         addPlayer()
         shuffle()
         
-        scoreLabel.position = CGPoint(x: self.size.width / 2, y: self.size.height)
+        scoreLabel.position = CGPoint(x: self.size.width / 2, y: self.size.height - 35)
         addChild(scoreLabel)
     }
     
@@ -71,7 +71,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .idle:
             startGame()
         case .running:
-            player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 7))
+            player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 6))
         case .over:
             shuffle()
         }
@@ -154,7 +154,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private func createRandomPipes() {
         let height = self.size.height - self.base1.size.height
-        let pipeGap = CGFloat(arc4random_uniform(UInt32(player.size.height))) + player.size.height * 2.5
+        let pipeGap = CGFloat(arc4random_uniform(UInt32(player.size.height))) + player.size.height * 3
         
         let pipeWidth = CGFloat(60.0)
         let topPipeHeight = CGFloat(arc4random_uniform(UInt32(height - pipeGap)))
